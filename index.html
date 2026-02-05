@@ -516,13 +516,7 @@
     window.addEventListener("scroll", updateFloatButtons, { passive:true });
 
     // ScrollReveal (después de cortinas)
-    function startScrollReveal(){
-      if (!window.ScrollReveal) return;
-      ScrollReveal().reveal('.bottom', { delay: 150, origin: 'bottom', duration: 900, distance: '22px', reset: true });
-      ScrollReveal().reveal('.top',    { delay: 150, origin: 'top',    duration: 900, distance: '22px', reset: true });
-      ScrollReveal().reveal('.left',   { delay: 150, origin: 'left',   duration: 900, distance: '22px', reset: true });
-      ScrollReveal().reveal('.right',  { delay: 150, origin: 'right',  duration: 900, distance: '22px', reset: true });
-    }
+
 
     // Typewriter (después de cortinas)
     function startTypewriterObserver(){
