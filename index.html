@@ -426,11 +426,11 @@
     </div>
 
     <!-- SECCIÓN 1 -->
-    <section class="screen bottom" id="s1">
+    <section class="screen top" id="s1">
       <div class="container">
         <div class="split">
           <div class="split__media left">
-            <img class="heroImg animate__animated animate__shakeY" src="bautizo.png" alt="Bautizo">
+            <img class="heroImg " src="bautizo.png" alt="Bautizo">
           </div>
 
           <div class="split__content right">
@@ -459,7 +459,7 @@
       <div class="container">
         <div class="split">
 
-          <div class="split__content right">
+          <div class="split__content">
             <div class="panel">
               <h1 class="top" style="font-family:'Great Vibes', cursive;">
                 Elizabeth <span>Marcelo</span> Ocampo
@@ -467,9 +467,9 @@
 
               <p data-type>Con alegría te invitamos a celebrar un día lleno de amor y fe. ✨</p>
 
-              <div class="grid2">
+              <div  class="grid2">
                 <div class="card">
-                  <img class="photo" src="eli3.jpeg" alt="Foto de la princesa">
+                  <img  class="photo animate__bounce" src="eli3.jpeg" alt="Foto de la princesa">
                 </div>
               </div>
 
@@ -481,6 +481,18 @@
     </section>
 
   </div>
+
+
+    <script>
+
+      // Changing the defaults
+    window.sr = ScrollReveal({ reset: true });
+
+    // Customizing a reveal set
+    sr.reveal('.top', { duration: 800, origin: 'bottom', delay: 600, distance: '60px', easing: 'cubic-bezier(0.6, 0.2, 0.1, 1)' });
+    
+  </script>
+
 
   <script>
     const $ = (id) => document.getElementById(id);
@@ -604,7 +616,7 @@
 
         window.scrollTo({ top: 0, behavior: "instant" });
 
-        startScrollReveal();
+
         startTypewriterObserver();
 
         updateFloatButtons();
