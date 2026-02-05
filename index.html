@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invitación Bautizo | Princesa</title>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <!-- ScrollReveal -->
+  <script src="https://unpkg.com/scrollreveal"></script>
+
+  <style>
+    :root{
+      --fucsia:#ff2ea6;
+      --fucsia-2:#ff62c2;
+      --gold:#d6b25e;
+      --gold-2:#f2d98a;
+
+      --bg:#fff7fd;
+      --white:#ffffff;
+      --ink:#231626;
+      --muted:#6b5a70;
+
+      --shadow: 0 18px 55px rgba(0,0,0,.16);
+      --radius: 28px;
+      --max: 1040px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--ink);
+      background:
+        radial-gradient(1050px 700px at 18% 6%, rgba(255,46,166,.20), transparent 55%),
+        radial-gradient(950px 560px at 92% 16%, rgba(214,178,94,.20), transparent 55%),
+        radial-gradient(950px 680px at 52% 100%, rgba(255,98,194,.14), transparent 60%),
+        linear-gradient(180deg, #fff 0%, var(--bg) 40%, #fff 100%);
+      overflow-x:hidden;
+
+      /* snap por secciones */
+      scroll-snap-type: y mandatory;
+      overflow-y: auto;
+    }
+
+    .sparkles{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(214,178,94,.22) 0 2px, transparent 3px),
+        radial-gradient(circle at 72% 12%, rgba(255,46,166,.18) 0 2px, transparent 3px),
+        radial-gradient(circle at 84% 62%, rgba(214,178,94,.16) 0 2px, transparent 3px),
+        radial-gradient(circle at 32% 82%, rgba(255,46,166,.12) 0 2px, transparent 3px);
+      opacity:.95;
+      filter: blur(.2px);
+    }
+
+    /* SECCIONES 100vh */
+    .screen{
+      min-height:100vh;
+      display:flex;
+      align-items:stretch;
+      justify-content:center;
+      padding: 0px 0 50px;
+      position:relative;
+      z-index:1;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    .container{
+      width:min(var(--max), 92vw);
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      padding-top: 24px;
+    }
+    .panel{
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.80);
+      box-shadow: 0 18px 50px rgba(0,0,0,.10);
+      border: 1px solid rgba(214,178,94,.35);
+      padding: 18px;
+      position:relative;
+      overflow:hidden;
+      flex:1;
+    }
+    .panel::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(380px 260px at 18% 0%, rgba(255,46,166,.13), transparent 62%),
+        radial-gradient(380px 260px at 92% 8%, rgba(214,178,94,.13), transparent 62%);
+      pointer-events:none;
+    }
+
+    .panel h1,.panel h2{
+      position:relative;
+      margin:0 0 10px;
+      font-family:"Playfair Display", serif;
+      letter-spacing:.2px;
+    }
+    .panel h1{
+      font-size: clamp(34px, 7vw, 58px);
+      line-height:1.05;
+    }
+    .panel h1 span{
+      background: linear-gradient(90deg, var(--fucsia), var(--gold));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-weight:900;
+    }
+    .panel p{
+      position:relative;
+      margin:0;
+      color:var(--muted);
+      line-height:1.85;
+      font-size: 15.3px;
+    }
+
+    .grid2{display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px; position:relative;}
+    @media (min-width:920px){ .grid2{grid-template-columns:1fr 1fr;} }
+
+    .card{
+      border-radius:24px;
+      background: rgba(255,255,255,.76);
+      border:1px solid rgba(214,178,94,.32);
+      padding:14px;
+      position:relative;
+    }
+    .card h3{margin:0 0 6px; font-size:15.8px; letter-spacing:.2px; color:var(--ink);}
+
+    .actions{display:grid; grid-template-columns:1fr; gap:10px; margin-top:12px; position:relative;}
+    @media (min-width:700px){ .actions{grid-template-columns:repeat(3,1fr);} }
+
+    .btn{
+      border:0; cursor:pointer;
+      padding: 13px 14px;
+      border-radius: 18px;
+      font-weight:900;
+      letter-spacing:.2px;
+      transition: transform .15s ease;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      user-select:none;
+      font-size: 14px;
+      min-height: 50px;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn:active{transform: translateY(1px)}
+    .btnPrimary{color:white; background: linear-gradient(90deg, var(--fucsia), var(--fucsia-2)); box-shadow: 0 16px 30px rgba(255,46,166,.22);}
+    .btnGold{color:#3a2b19; background: linear-gradient(90deg, var(--gold), var(--gold-2)); box-shadow: 0 16px 30px rgba(214,178,94,.22);}
+    .btnGhost{color: var(--ink); background: rgba(255,255,255,.76); border:1px solid rgba(214,178,94,.35);}
+    .note{margin-top:10px; font-size:12.8px; color:var(--muted); position:relative;}
+
+    /* FLOAT BAR (2 botones) */
+    .floatBar{
+      position:fixed;
+      left:50%;
+      transform: translateX(-50%);
+      bottom: 14px;
+      z-index:40;
+
+      display:flex;
+      gap:10px;
+      padding: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(214,178,94,.35);
+      box-shadow: 0 14px 30px rgba(0,0,0,.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      width: min(440px, 92vw);
+      justify-content:space-between;
+    }
+    .floatBtn{
+      flex:1;
+      height: 48px;
+      border-radius: 18px;
+      border: 1px solid rgba(214,178,94,.35);
+      background: rgba(255,255,255,.78);
+      cursor:pointer;
+      font-size: 14px;
+      font-weight: 950;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition: transform .15s ease, opacity .15s ease;
+      user-select:none;
+    }
+    .floatBtn:hover{transform: translateY(-1px)}
+    .floatBtn:active{transform: translateY(1px)}
+    .floatBtn[disabled]{opacity:.5; cursor:not-allowed;}
+    .floatBtn.primary{
+      color:#fff;
+      border:0;
+      background: linear-gradient(90deg, var(--fucsia), var(--fucsia-2));
+      box-shadow: 0 16px 30px rgba(255,46,166,.18);
+    }
+
+    /* ====== CORTINAS (INTRO) ====== */
+    .curtain{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      pointer-events:auto;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      background: rgba(0,0,0,.30);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .curtainSide{ position:relative; overflow:hidden; }
+    .curtainSide::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,.08) 0px,
+          rgba(255,255,255,.02) 18px,
+          rgba(0,0,0,.06) 36px
+        ),
+        radial-gradient(900px 420px at 50% -10%, rgba(242,217,138,.25), transparent 55%),
+        linear-gradient(180deg, rgba(255,46,166,.95), rgba(255,98,194,.92) 40%, rgba(214,178,94,.90));
+      filter: saturate(1.1);
+    }
+    .curtainSide.left::after,
+    .curtainSide.right::after{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      width: 18px;
+      background: linear-gradient(180deg, rgba(242,217,138,.95), rgba(214,178,94,.85), rgba(242,217,138,.95));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.15) inset, 0 0 22px rgba(214,178,94,.35);
+    }
+    .curtainSide.left::after{right:0}
+    .curtainSide.right::after{left:0}
+
+    .shine{
+      position:absolute;
+      top:-40px; left:-60px;
+      width:160px; height:120%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+      transform: rotate(12deg);
+      animation: curtainShine 1.8s ease-in-out infinite;
+      opacity:.7;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+    @keyframes curtainShine{
+      0%{transform: translateX(-120%) rotate(12deg)}
+      100%{transform: translateX(260%) rotate(12deg)}
+    }
+
+    .curtainCenter{
+      position:fixed;
+      inset:0;
+      z-index:10000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      text-align:center;
+      gap:12px;
+      pointer-events:auto;
+      padding: 24px;
+    }
+    .curtainTitle{
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(50px, 8vw, 88px);
+      line-height:1.05;
+      margin:0;
+      color: #fff;
+      text-shadow: 0 18px 40px rgba(0,0,0,.35);
+    }
+    .curtainTitle span{
+      background: linear-gradient(90deg, #fff, var(--gold-2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-weight:900;
+    }
+    .enterBtn{
+      margin-top: 6px;
+      border:0;
+      cursor:pointer;
+      padding: 14px 18px;
+      border-radius: 999px;
+      font-weight: 950;
+      letter-spacing:.3px;
+      color:#fff;
+      background: linear-gradient(90deg, var(--fucsia), var(--gold));
+      box-shadow: 0 18px 44px rgba(255,46,166,.25);
+      transition: transform .15s ease;
+    }
+    .enterBtn:hover{transform: translateY(-1px)}
+    .enterBtn:active{transform: translateY(1px)}
+
+    body.is-opening{ overflow: hidden; }
+    body.open .curtain{ pointer-events:none; }
+    body.open .curtainCenter{ pointer-events:none; }
+
+    body.open .curtainSide.left{
+      animation: openLeft 1.05s cubic-bezier(.2,.9,.18,1) forwards;
+    }
+    body.open .curtainSide.right{
+      animation: openRight 1.05s cubic-bezier(.2,.9,.18,1) forwards;
+    }
+    body.open .curtainCenter{
+      animation: centerFade 0.55s ease forwards;
+    }
+
+    @keyframes openLeft{ to{ transform: translateX(-104%); } }
+    @keyframes openRight{ to{ transform: translateX(104%); } }
+    @keyframes centerFade{ to{ opacity:0; transform: scale(.98); } }
+
+    .curtain.hidden,
+    .curtainCenter.hidden{ display:none; }
+
+    @media (prefers-reduced-motion: reduce){
+      body{scroll-behavior:auto}
+      .shine{animation:none}
+      body.open .curtainSide.left,
+      body.open .curtainSide.right,
+      body.open .curtainCenter{animation:none}
+    }
+
+    /* ===== Mostrar contenido SOLO después de la cortina ===== */
+    .app.is-hidden{
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+    .app.is-ready{
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    /* ===== Typewriter ===== */
+    .typewriting{ position: relative; }
+    .type-caret{
+      display:inline-block;
+      width: .6ch;
+      margin-left: .15ch;
+      border-right: 2px solid rgba(255,46,166,.85);
+      animation: caretBlink .8s steps(1) infinite;
+      transform: translateY(1px);
+    }
+    @keyframes caretBlink{ 50%{ opacity:0; } }
+
+    .type-fade{
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .type-fade.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== Layout tipo Canva: imagen / texto ===== */
+    .split{
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    @media (min-width: 900px){
+      .split{ grid-template-columns: 1fr 1fr; gap: 28px; }
+      .split.is-reverse .split__media{ order: 2; }
+      .split.is-reverse .split__content{ order: 1; }
+    }
+
+    .split__media{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .mediaCard{
+      width: min(520px, 100%);
+      aspect-ratio: 4 / 5;
+      border-radius: 26px;
+      /* overflow: hidden; */
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(214,178,94,.35);
+      box-shadow: 0 18px 50px rgba(0,0,0,.10);
+      position: relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .mediaCard img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+
+    .placeholder{
+      height:100%;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      text-align:center;
+      color: var(--muted);
+      font-weight: 900;
+      letter-spacing: .2px;
+      background:
+        radial-gradient(220px 170px at 20% 18%, rgba(255,46,166,.16), transparent 60%),
+        radial-gradient(260px 190px at 85% 30%, rgba(214,178,94,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.62));
+    }
+
+    @media (max-width: 420px){
+      .mediaCard{ aspect-ratio: 1 / 1.05; }
+    }
+  </style>
+</head>
+
+<body class="is-opening">
+  <div class="sparkles"></div>
+
+  <!-- CORTINAS (siempre arriba) -->
+  <div class="curtain" id="curtain" aria-hidden="true">
+    <div class="curtainSide left"><div class="shine"></div></div>
+    <div class="curtainSide right"><div class="shine"></div></div>
+  </div>
+
+  <!-- Centro (texto + botón) -->
+  <div class="curtainCenter" id="curtainCenter" role="dialog" aria-modal="true" aria-label="Introducción">
+    <h2 class="curtainTitle animate__animated animate__heartBeat">
+      Bienvenidos al Bautizo de <span>Nuestra Princesa</span>
+    </h2>
+    <button class="enterBtn" id="enterBtn">👑 Entrar</button>
+  </div>
+
+  <!-- ✅ TODO el contenido inicia oculto -->
+  <div id="app" class="app is-hidden">
+    <!-- FLOAT BAR (2 botones) -->
+    <div class="floatBar" aria-label="Navegación por secciones">
+      <button class="floatBtn" id="btnUp" title="Subir">⬆ Subir</button>
+      <button class="floatBtn primary" id="btnDown" title="Bajar">⬇ Bajar</button>
+    </div>
+
+    <!-- SECCIÓN 1 -->
+    <section class="screen bottom" id="s1">
+      <div class="container">
+        <div class="split">
+          <!-- IZQUIERDA: IMAGEN / LOGO / FOTO -->
+          <div class="split__media left">
+           
+              <!-- ✅ PON AQUÍ TU IMAGEN -->
+              <img class="animate__shakeY" style="width:500px" src="bautizo.png" alt="Bautizo">
+              <!-- Si no quieres imagen, borra el <img> y usa el placeholder:
+              <div class="placeholder">Aquí va tu imagen/monograma</div>
+              -->
+        
+          </div>
+
+          <!-- DERECHA: TEXTO -->
+          <div class="split__content right">
+            <div class="panel">
+              <h1 class="top" style="font-family:'Great Vibes', cursive; text-align: center;">
+                Elizabeth <span>Marcelo</span> Ocampo
+              </h1>
+
+              <p data-type>Con alegría te invitamos a celebrar un día lleno de amor y fe. ✨</p>
+
+              <div class="grid2">
+                <div class="card">
+                  <img style="width:100%; border-radius:18px; display:block;" src="eli1.png" alt="Foto de la princesa">
+                </div>
+                
+              </div>
+
+
+              <div class="note" id="copyMsg" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2 -->
+
+        <section class="screen bottom" id="s2">
+      <div class="container">
+        <div class="split">
+          <!-- IZQUIERDA: IMAGEN / LOGO / FOTO -->
+          <div class="split__media right">
+           
+              <!-- ✅ PON AQUÍ TU IMAGEN -->
+              <img class="animate__shakeY" style="width:500px" src="bautizo.png" alt="Bautizo">
+              <!-- Si no quieres imagen, borra el <img> y usa el placeholder:
+              <div class="placeholder">Aquí va tu imagen/monograma</div>
+              -->
+        
+          </div>
+
+          <!-- DERECHA: TEXTO -->
+          <div class="split__content right">
+            <div class="panel">
+              <h1 class="top" style="font-family:'Great Vibes', cursive; text-align: center;">
+                Elizabeth <span>Marcelo</span> Ocampo
+              </h1>
+
+              <p data-type>Con alegría te invitamos a celebrar un día lleno de amor y fe. ✨</p>
+
+              <div class="grid2">
+                <div class="card">
+                  <img style="width:100%; border-radius:18px; display:block;" src="eli1.png" alt="Foto de la princesa">
+                </div>
+                
+              </div>
+
+
+              <div class="note" id="copyMsg" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+   
+  </div>
+
+  <script>
+    // ===========================
+    // CONFIG (EDITA AQUÍ)
+    // ===========================
+
+
+    const $ = (id) => document.getElementById(id);
+
+    // Pintar datos
+    // $("girlName").textContent = config.nombre;
+    // $("fechaTxt").textContent = config.fechaTexto;
+    // $("horaTxt").textContent = config.horaTexto;
+
+
+
+    // Copiar dirección
+    async function copyAddress(){
+      try{
+        await navigator.clipboard.writeText(config.direccionCorta);
+        $("copyMsg").textContent = "✅ Dirección copiada.";
+        setTimeout(()=> $("copyMsg").textContent = "", 2500);
+      }catch(e){
+        $("copyMsg").textContent = "⚠️ No pude copiar. Copia manual: " + config.direccionCorta;
+      }
+    }
+
+
+    // ===========================
+    // Navegación por secciones (botones)
+    // ===========================
+    const sections = Array.from(document.querySelectorAll(".screen"));
+
+    function getCurrentIndex(){
+      const y = window.scrollY + window.innerHeight * 0.35;
+      let idx = 0;
+      for (let i=0; i<sections.length; i++){
+        const top = sections[i].offsetTop;
+        const bottom = top + sections[i].offsetHeight;
+        if (y >= top && y < bottom) { idx = i; break; }
+      }
+      return idx;
+    }
+    function goToIndex(idx){
+      idx = Math.max(0, Math.min(sections.length - 1, idx));
+      sections[idx].scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    const btnUp = $("btnUp");
+    const btnDown = $("btnDown");
+    btnUp.addEventListener("click", () => goToIndex(getCurrentIndex() - 1));
+    btnDown.addEventListener("click", () => goToIndex(getCurrentIndex() + 1));
+
+    function updateFloatButtons(){
+      const idx = getCurrentIndex();
+      btnUp.disabled = idx === 0;
+      btnDown.disabled = idx === sections.length - 1;
+    }
+    window.addEventListener("scroll", updateFloatButtons, { passive:true });
+
+    // ===========================
+    // TYPEWRITER: arranca SOLO después de abrir cortinas
+    // ===========================
+    function startTypewriterObserver(){
+      const TYPE_SPEED_MS = 18;
+      const TYPE_DELAY_MS = 120;
+      const TYPE_ONCE = true;
+
+      const typeEls = Array.from(document.querySelectorAll("[data-type]"));
+
+      typeEls.forEach(el => {
+        if (el.dataset.typeInit === "1") return;
+        el.dataset.typeInit = "1";
+
+        const text = el.textContent.replace(/\s+/g, " ").trim();
+        el.dataset.typeText = text;
+
+        el.textContent = "";
+        el.classList.add("typewriting", "type-fade");
+
+        const caret = document.createElement("span");
+        caret.className = "type-caret";
+        el.appendChild(caret);
+      });
+
+      function typeInto(el) {
+        if (TYPE_ONCE && el.dataset.typed === "1") return;
+
+        el.dataset.typed = "1";
+        el.classList.add("is-visible");
+
+        const full = el.dataset.typeText || "";
+        let i = 0;
+        const caret = el.querySelector(".type-caret");
+
+        Array.from(el.childNodes).forEach(n => {
+          if (n !== caret) el.removeChild(n);
+        });
+
+        function tick() {
+          if (i <= full.length) {
+            const current = full.slice(0, i);
+
+            let textNode = el.firstChild;
+            if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+              textNode.nodeValue = current;
+            } else {
+              textNode = document.createTextNode(current);
+              el.insertBefore(textNode, caret);
+            }
+
+            i++;
+            setTimeout(tick, TYPE_SPEED_MS);
+          } else {
+            setTimeout(() => {
+              if (caret) caret.style.display = "none";
+            }, 450);
+          }
+        }
+
+        setTimeout(tick, TYPE_DELAY_MS);
+      }
+
+      const screens = Array.from(document.querySelectorAll(".screen"));
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+
+          const localTypeEls = Array.from(entry.target.querySelectorAll("[data-type]"));
+          localTypeEls.forEach((el, idx) => {
+            setTimeout(() => typeInto(el), idx * 220);
+          });
+        });
+      }, { threshold: 0.55 });
+
+      screens.forEach(sec => sectionObserver.observe(sec));
+    }
+
+    // ===========================
+    // ScrollReveal: arranca SOLO después de abrir cortinas
+    // ===========================
+    function startScrollReveal(){
+      if (!window.ScrollReveal) return;
+      ScrollReveal().reveal('.bottom', { delay: 150, origin: 'bottom', duration: 900, distance: '22px', reset: true });
+      ScrollReveal().reveal('.top',    { delay: 150, origin: 'top',    duration: 900, distance: '22px', reset: true });
+      ScrollReveal().reveal('.left',   { delay: 150, origin: 'left',   duration: 900, distance: '22px', reset: true });
+      ScrollReveal().reveal('.right',  { delay: 150, origin: 'right',  duration: 900, distance: '22px', reset: true });
+    }
+
+    // ===========================
+    // CORTINAS: ABRIR y después mostrar contenido
+    // ===========================
+    const curtain = $("curtain");
+    const curtainCenter = $("curtainCenter");
+    const enterBtn = $("enterBtn");
+
+    function openCurtains(){
+      document.body.classList.add("open");
+      document.body.classList.remove("is-opening");
+
+      // cuando termine la animación, ocultar capas
+      setTimeout(() => {
+        curtain.classList.add("hidden");
+        curtainCenter.classList.add("hidden");
+
+        // Mostrar app
+        const app = document.getElementById("app");
+        app.classList.remove("is-hidden");
+        app.classList.add("is-ready");
+
+        // Asegurar inicio
+        window.scrollTo({ top: 0, behavior: "instant" });
+
+        // Activar animaciones y observers
+        startScrollReveal();
+        startTypewriterObserver();
+
+        // Activar botones flotantes ya con todo cargado
+        updateFloatButtons();
+      }, 1150);
+    }
+
+    // Click para entrar
+    enterBtn.addEventListener("click", openCurtains);
+
+    // Auto-abrir (si quieres desactivarlo, borra esta línea)
+    setTimeout(openCurtains, 5000);
+
+    // Teclas Enter/Escape
+    window.addEventListener("keydown", (e) => {
+      if (!curtain || curtain.classList.contains("hidden")) return;
+      if (e.key === "Enter" || e.key === "Escape") openCurtains();
+    });
+  </script>
+</body>
+</html>
