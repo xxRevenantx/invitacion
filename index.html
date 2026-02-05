@@ -862,6 +862,265 @@
   color: rgba(35,22,38,.75);
 }
 
+/* =========================
+   NUBES SUTILES MOVIÉNDOSE (2 CAPAS)
+   ========================= */
+.clouds,
+.clouds2{
+  position: fixed;
+  inset: -30%;
+  pointer-events: none;
+  z-index: 1; /* ✅ sobre el fondo, bajo el contenido */
+  filter: blur(14px);
+  opacity: .70;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+}
+
+/* Capa 1 (más grande y lenta) */
+.clouds{
+  background:
+    radial-gradient(520px 260px at 18% 22%, rgba(255,255,255,.22), transparent 72%),
+    radial-gradient(680px 320px at 60% 18%, rgba(255,255,255,.18), transparent 74%),
+    radial-gradient(740px 360px at 42% 70%, rgba(255,255,255,.16), transparent 76%),
+    radial-gradient(560px 280px at 86% 78%, rgba(255,255,255,.14), transparent 74%);
+  animation: cloudsDrift 36s linear infinite;
+}
+
+/* Capa 2 (más finita, distinta dirección) */
+.clouds2{
+  inset: -35%;
+  opacity: .45;
+  filter: blur(18px);
+  background:
+    radial-gradient(420px 220px at 25% 35%, rgba(255,255,255,.16), transparent 72%),
+    radial-gradient(620px 300px at 78% 40%, rgba(255,255,255,.12), transparent 74%),
+    radial-gradient(520px 260px at 55% 82%, rgba(255,255,255,.10), transparent 75%);
+  animation: cloudsDrift2 52s linear infinite;
+}
+
+@keyframes cloudsDrift{
+  0%   { transform: translate3d(-3%, -1%, 0) scale(1.03); }
+  50%  { transform: translate3d( 3%,  1.6%, 0) scale(1.05); }
+  100% { transform: translate3d(-3%, -1%, 0) scale(1.03); }
+}
+
+@keyframes cloudsDrift2{
+  0%   { transform: translate3d( 3%,  1%, 0) scale(1.06); }
+  50%  { transform: translate3d(-2%, -1.8%, 0) scale(1.08); }
+  100% { transform: translate3d( 3%,  1%, 0) scale(1.06); }
+}
+
+/* Respeta reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .clouds, .clouds2{ animation: none; opacity: .25; }
+}
+
+
+/* =========================
+   DESTELLOS EN PUNTOS ESPECÍFICOS
+   ========================= */
+.twinkles{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index: 2; /* encima del glow, debajo del texto */
+}
+
+.twinkle{
+  position:absolute;
+  width: var(--tw, 12px);
+  height: var(--tw, 12px);
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  opacity: .9;
+  filter: drop-shadow(0 10px 18px rgba(214,178,94,.18));
+  transform: translate(-50%, -50%) rotate(0deg) scale(.9);
+  animation: twinklePop var(--d, 2.6s) ease-in-out var(--delay, 0s) infinite;
+}
+
+.twinkle::before,
+.twinkle::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), rgba(242,217,138,.85) 45%, rgba(214,178,94,.55) 75%, rgba(214,178,94,.25));
+  border-radius: 6px;
+  clip-path: polygon(50% 0%, 60% 35%, 100% 50%, 60% 65%, 50% 100%, 40% 65%, 0% 50%, 40% 35%);
+  opacity: .95;
+}
+
+.twinkle::after{
+  transform: rotate(45deg);
+  opacity: .85;
+}
+
+.twinkle.pink::before,
+.twinkle.pink::after{
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(255,98,194,.80) 45%, rgba(255,46,166,.55) 75%, rgba(255,46,166,.25));
+  filter: drop-shadow(0 10px 18px rgba(255,46,166,.14));
+}
+
+.twinkle.soft{ opacity: .65; }
+.twinkle.big{ --tw: 16px; }
+.twinkle.small{ --tw: 10px; }
+
+@keyframes twinklePop{
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(.85); opacity: .55; }
+  40%      { transform: translate(-50%, -50%) rotate(15deg) scale(1.15); opacity: 1; }
+  65%      { transform: translate(-50%, -50%) rotate(-10deg) scale(.95); opacity: .85; }
+}
+
+/* Respeta reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .twinkle{ animation: none; opacity: .35; }
+}
+
+/* =========================
+   CONTORNO DORADO + DESTELLOS EN BORDE (TODAS LAS SECCIONES)
+   ========================= */
+
+/* Reforzamos el panel y reservamos capas */
+.panel{
+  border: 1px solid rgba(214,178,94,.35); /* tu borde base */
+  position: relative;
+  overflow: hidden;
+  isolation: isolate; /* ✅ para que los pseudo-elementos no se mezclen raro */
+}
+
+/* Marco dorado con gradiente (fino y elegante) */
+.panel::marker{ content:""; } /* no hace nada, solo evita warnings en algunos editores */
+
+.panel::before{
+  /* OJO: tú ya usas ::before para un fondo radial.
+     No lo vamos a perder: lo mantenemos, pero lo movemos a z-index más bajo. */
+  z-index: 0;
+}
+
+/* ✅ Nuevo MARCO: lo hacemos con ::after (y lo convertimos en “borde brillante”) */
+.panel::after{
+  content:"";
+  position:absolute;
+  inset: -2px;                /* sobresale un poquito para el glow */
+  border-radius: var(--radius);
+
+  /* Marco dorado con toques fucsia */
+  background: conic-gradient(
+    from 180deg,
+    rgba(214,178,94,.25),
+    rgba(242,217,138,.55),
+    rgba(255,98,194,.18),
+    rgba(214,178,94,.55),
+    rgba(242,217,138,.35),
+    rgba(214,178,94,.25)
+  );
+
+  filter: blur(10px);
+  opacity: .65;
+  z-index: 0;                 /* debajo del contenido */
+  pointer-events:none;
+}
+
+/* ✅ Borde real (nítido) usando background-clip */
+.panel{
+  background:
+    linear-gradient(rgba(255,255,255,.80), rgba(255,255,255,.80)) padding-box,
+    linear-gradient(135deg,
+      rgba(242,217,138,.95),
+      rgba(214,178,94,.85),
+      rgba(255,98,194,.25),
+      rgba(242,217,138,.95)
+    ) border-box;
+  border: 2px solid transparent; /* importante para que se vea el borde */
+}
+
+/* =========================
+   DESTELLOS QUE RECORREN EL BORDE
+   ========================= */
+.panel .borderSpark{
+  position:absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  pointer-events:none;
+  z-index: 1; /* encima del marco, debajo del texto */
+  overflow:hidden;
+}
+
+/* “Brillo” que viaja alrededor del borde */
+.panel .borderSpark::before{
+  content:"";
+  position:absolute;
+  width: 140px;
+  height: 140px;
+  left: -20%;
+  top: -20%;
+
+  background: radial-gradient(circle,
+    rgba(255,255,255,.95) 0%,
+    rgba(242,217,138,.85) 35%,
+    rgba(214,178,94,.35) 60%,
+    transparent 72%
+  );
+
+  filter: blur(.2px) drop-shadow(0 12px 22px rgba(214,178,94,.22));
+  opacity: .85;
+
+  animation: borderRun 6.5s linear infinite;
+}
+
+/* Segundo destello (más pequeño, fucsia) */
+.panel .borderSpark::after{
+  content:"";
+  position:absolute;
+  width: 90px;
+  height: 90px;
+  left: 120%;
+  top: 10%;
+
+  background: radial-gradient(circle,
+    rgba(255,255,255,.92) 0%,
+    rgba(255,98,194,.75) 40%,
+    rgba(255,46,166,.30) 65%,
+    transparent 74%
+  );
+
+  filter: blur(.2px) drop-shadow(0 12px 22px rgba(255,46,166,.16));
+  opacity: .70;
+
+  animation: borderRun2 8.8s linear infinite;
+}
+
+/* Trayectoria 1: recorre esquinas */
+@keyframes borderRun{
+  0%   { transform: translate(0%, 0%) }
+  25%  { transform: translate(120%, 0%) }
+  50%  { transform: translate(120%, 95%) }
+  75%  { transform: translate(0%, 95%) }
+  100% { transform: translate(0%, 0%) }
+}
+
+/* Trayectoria 2: diagonal suave */
+@keyframes borderRun2{
+  0%   { transform: translate(0%, 0%) scale(.9) }
+  33%  { transform: translate(-140%, 45%) scale(1.05) }
+  66%  { transform: translate(-140%, 95%) scale(.95) }
+  100% { transform: translate(0%, 0%) scale(.9) }
+}
+
+/* ✅ Aseguro que el contenido esté arriba */
+.panel > *{
+  position: relative;
+  z-index: 2;
+}
+
+/* Respeta usuarios con reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .panel .borderSpark::before,
+  .panel .borderSpark::after{
+    animation: none;
+    opacity: .25;
+  }
+}
 
 
 
@@ -879,6 +1138,7 @@
 
 
   <div class="sparkles"></div>
+  <div class="clouds2" aria-hidden="true"></div>
   <div class="clouds" aria-hidden="true"></div>
 
 <div class="petals" id="petals" aria-hidden="true"></div>
@@ -914,11 +1174,20 @@
 
           <div class="split__content right">
             <div class="panel">
+                <div class="borderSpark" aria-hidden="true"></div>
+
+              <div class="twinkles" aria-hidden="true">
+  <span class="twinkle gold big"   style="--x: 86%; --y: 12%; --d: 2.8s; --delay: .2s;"></span>
+  <span class="twinkle pink small" style="--x: 14%; --y: 20%; --d: 2.4s; --delay: .9s;"></span>
+  <span class="twinkle gold"       style="--x: 92%; --y: 58%; --d: 3.2s; --delay: .5s;"></span>
+  <span class="twinkle pink soft"  style="--x: 8%;  --y: 78%; --d: 3.0s; --delay: 1.1s;"></span>
+</div>
+
            
 
 
 
-              <h1 class="top" style="font-family:'Great Vibes', cursive;">
+              <h1 class="top" style="font-family:'Great Vibes', cursive; font-size:58px;">
                 Elizabeth <span>Marcelo</span> Ocampo
               </h1>
 
@@ -1032,7 +1301,7 @@
             </div>
             <div class="misa-pill">
               <span class="misa-icon" aria-hidden="true">🕓</span>
-              <span>4:00 pm</span>
+              <span>7:00 pm</span>
             </div>
 
                       <div class="actionRow">
@@ -1152,9 +1421,11 @@
 
           <div class="endGlow" aria-hidden="true"></div>
 
-          <h1 class="cursiva endTitle animate__animated animate__heartBeat">
-            ✨ Te esperamos ✨
-          </h1>
+  
+
+           <h1 class="top" style="font-family:'Great Vibes', cursive; font-size:48px;">
+                <span> Te esperamos</span>
+              </h1>
 
           <div class="endChips" aria-hidden="true">
             <span class="chip">👼 Bendiciones</span>
@@ -1167,6 +1438,18 @@
           <p class="endText" data-type>
             Será un honor compartir contigo este momento tan especial.
           </p>
+
+
+<div class="countdownCard" aria-live="polite">
+  <p class="countdownTitle">⏳ Falta para el gran día</p>
+
+  <div class="countdownGrid" id="countdown">
+    <div class="unit"><strong id="cdDays">--</strong><span>Días</span></div>
+    <div class="unit"><strong id="cdHours">--</strong><span>Horas</span></div>
+    <div class="unit"><strong id="cdMins">--</strong><span>Min</span></div>
+    <div class="unit"><strong id="cdSecs">--</strong><span>Seg</span></div>
+  </div>
+</div>
 
           <div class="endActions">
             <a class="actionBtn gold" href="#s4">⛪ Ver Misa</a>
@@ -1536,6 +1819,20 @@ musicBtn.addEventListener("click", toggleMusic);
     });
   })();
 </script>
+
+<script>
+  (function(){
+    const tw = document.querySelectorAll(".twinkle");
+    const rand = (a,b)=>Math.random()*(b-a)+a;
+    tw.forEach(el=>{
+      const d = rand(2.1, 3.6).toFixed(2) + "s";
+      const delay = rand(0, 1.4).toFixed(2) + "s";
+      el.style.setProperty("--d", el.style.getPropertyValue("--d") || d);
+      el.style.setProperty("--delay", el.style.getPropertyValue("--delay") || delay);
+    });
+  })();
+</script>
+
 
 
 </body>
