@@ -77,7 +77,7 @@
       display:flex;
       align-items:center;       /* ✅ centra vertical */
       justify-content:center;   /* ✅ centra horizontal */
-      padding: 18px 0 88px;     /* ✅ deja espacio a la barra flotante */
+      padding: 0px 0 0px;     /* ✅ deja espacio a la barra flotante */
       position:relative;
       z-index:1;
       scroll-snap-align: start;
@@ -392,7 +392,7 @@
       .card{ padding: 12px; border-radius: 18px; }
 
       .panel h1{ font-size: clamp(26px, 9vw, 42px); }
-      .panel p{ font-size: 14px; line-height: 1.7; }
+ 
 
       .floatBar{ bottom: 10px; padding: 8px; }
       .floatBtn{ height: 44px; font-size: 13px; border-radius: 16px; }
@@ -408,10 +408,44 @@
 
         
     }
+.musicBtn{
+  position: fixed;
+  right: 16px;
+  bottom: 16px; /* ✅ siempre pegado abajo */
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+
+  background: linear-gradient(90deg, var(--fucsia), var(--fucsia-2));
+  color: #fff;
+  box-shadow: 0 18px 44px rgba(255,46,166,.28);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  font-weight: 900;
+
+  z-index: 99999; /* ✅ por encima de todo */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.musicBtn:active{ transform: translateY(1px); }
+
+.musicBtn.is-on{
+  background: linear-gradient(90deg, var(--gold), var(--gold-2));
+  color: #3a2b19;
+}
+
+
 
       .cursiva{ 
         font-family: 'Great Vibes', cursive;
-         font-size: 50px;
+         font-size: 40px;
          text-align:center;
          color:#ff62c2
      }
@@ -419,6 +453,9 @@
 </head>
 
 <body class="is-opening">
+
+
+
   <div class="sparkles"></div>
 
   <!-- CORTINAS -->
@@ -444,9 +481,9 @@
       <button class="floatBtn primary" id="btnDown" title="Bajar">⬇ Bajar</button>
     </div>
 
-     <audio id="audio" loop style="display: none;">
-  <source src="audio.mp3" type="audio/mpeg">
-</audio>
+
+
+
 
     <!-- SECCIÓN 1 -->
     <section class="screen top" id="s1">
@@ -489,7 +526,7 @@
               </h1>
               
               <h1 class="top" style="font-family:'Great Vibes', cursive;">
-               <span>Mariano Marcelo Mendez y Angéli Ocampo Agustín</span>
+               <span>Mariano Marcelo Mendez y Angélica Ocampo Agustín</span>
               </h1>
 
 
@@ -520,6 +557,9 @@
                <span>Padrinos</span>
               </h1>
 
+               <h1 class="top" style="font-family:'Great Vibes', cursive;">
+               <span>*Humberto Valle Vergara <br> *Rosa Elena Gaona Reynoso</span>
+              </h1>
               <div  class="grid2">
                 <div class="card">
                   <img  class="photo animate__bounce" src="padrinos.png" alt="Foto de la princesa">
@@ -540,20 +580,19 @@
 
   </div>
 
+  
+  <audio id="audio" loop preload="auto">
+  <source src="audio.mp3" type="audio/mpeg">
+</audio>
 
-<script>
-const audio = document.getElementById("audio");
-
-// cuando el usuario toca cualquier parte de la pantalla
-document.addEventListener("click", function activarAudio() {
-    audio.play().catch(()=>{});
-    document.removeEventListener("click", activarAudio);
-});
-</script>
+<button id="musicBtn" class="musicBtn" aria-label="Activar música" title="Música">
+  ▶
+</button>
 
 
 
-    <script>
+
+  <script>
 
       // Changing the defaults
     window.sr = ScrollReveal({ reset: true });
@@ -565,6 +604,41 @@ document.addEventListener("click", function activarAudio() {
 
 
   <script>
+
+    const audio = document.getElementById("audio");
+const musicBtn = document.getElementById("musicBtn");
+
+let isPlaying = false;
+
+async function toggleMusic(){
+  try{
+    if (!isPlaying){
+      await audio.play();     // ✅ permitido por toque
+      isPlaying = true;
+      musicBtn.classList.add("is-on");
+      musicBtn.textContent = "❚❚";
+      musicBtn.setAttribute("aria-label", "Pausar música");
+    }else{
+      audio.pause();
+      isPlaying = false;
+      musicBtn.classList.remove("is-on");
+      musicBtn.textContent = "▶";
+      musicBtn.setAttribute("aria-label", "Activar música");
+    }
+  }catch(e){
+    // si el navegador bloquea algo, no truena
+    console.log("No se pudo reproducir:", e);
+  }
+}
+
+musicBtn.addEventListener("click", toggleMusic);
+
+
+
+
+
+
+
     const $ = (id) => document.getElementById(id);
 
     // Secciones para botones
@@ -691,6 +765,8 @@ document.addEventListener("click", function activarAudio() {
 
         updateFloatButtons();
       }, 1150);
+
+
     }
 
     enterBtn.addEventListener("click", openCurtains);
