@@ -539,13 +539,16 @@
   </div>
 
 
-  <script>
+<script>
+const audio = document.getElementById("audio");
 
-  // Selecciona el elemento de audio
-  var audio = document.getElementById("audio");
-  // Establece el volumen al 30% (rango 0.0 a 1.0)
-  audio.volume = 0.3;
-  </script>
+// cuando el usuario toca cualquier parte de la pantalla
+document.addEventListener("click", function activarAudio() {
+    audio.play().catch(()=>{});
+    document.removeEventListener("click", activarAudio);
+});
+</script>
+
 
 
     <script>
