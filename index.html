@@ -42,6 +42,8 @@
     img{max-width:100%; height:auto; display:block;}
     html, body{touch-action: pan-y;}
 
+
+
     body{
       margin:0;
       font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial;
@@ -127,15 +129,16 @@
       color:transparent;
       font-weight:900;
     }
+    /*
     .panel p{
       position:relative;
       margin:0;
       color:var(--muted);
       line-height:1.85;
-      font-size: 15.3px;
-      text-align:center; /* ✅ centrado */
+  
+      text-align:center;
     }
-
+*/
     .grid2{display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px; position:relative;}
 
     .card{
@@ -395,7 +398,23 @@
       .floatBtn{ height: 44px; font-size: 13px; border-radius: 16px; }
 
       .heroImg{ width: min(240px, 78vw); }
+
+      .cursiva{ 
+        font-family: 'Great Vibes', cursive;
+         font-size: 50px;
+         text-align:center;
+         color:#ff62c2
+     }
+
+        
     }
+
+      .cursiva{ 
+        font-family: 'Great Vibes', cursive;
+         font-size: 50px;
+         text-align:center;
+         color:#ff62c2
+     }
   </style>
 </head>
 
@@ -462,16 +481,49 @@
           <div class="split__content">
             <div class="panel">
               <h1 class="top" style="font-family:'Great Vibes', cursive;">
-                Elizabeth <span>Marcelo</span> Ocampo
+               <span>Papás</span>
+              </h1>
+              
+              <h1 class="top" style="font-family:'Great Vibes', cursive;">
+               <span>Mariano Marcelo Mendez y Angéli Ocampo Agustín</span>
               </h1>
 
-              <p data-type>Con alegría te invitamos a celebrar un día lleno de amor y fe. ✨</p>
+
 
               <div  class="grid2">
                 <div class="card">
-                  <img  class="photo animate__bounce" src="eli3.jpeg" alt="Foto de la princesa">
+                  <img  class="photo animate__bounce" src="padres.jpeg" alt="Padres">
                 </div>
               </div>
+
+              <p class="cursiva" data-type>Con el corazón lleno de amor y gratitud, damos gracias a Dios por la bendición de nuestra hija y le pedimos que ilumine su vida con salud, alegría y protección eterna. 💖</p>
+
+
+              <div class="note" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- PADRINOS 2 -->
+    <section class="screen top" id="s3">
+      <div class="container">
+        <div class="split">
+
+          <div class="split__content">
+            <div class="panel">
+              <h1 class="top" style="font-family:'Great Vibes', cursive;">
+               <span>Padrinos</span>
+              </h1>
+
+              <div  class="grid2">
+                <div class="card">
+                  <img  class="photo animate__bounce" src="padrinos.png" alt="Foto de la princesa">
+                </div>
+              </div>
+
+              <p class="cursiva" data-type>Hoy aceptamos con amor y alegría el honor de ser tus padrinos, prometiendo acompañarte siempre con cariño, guía y bendiciones en cada etapa de tu vida.</p>
+
 
               <div class="note" role="status" aria-live="polite"></div>
             </div>
