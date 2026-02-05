@@ -532,10 +532,19 @@
       </div>
     </section>
 
-    <audio controls autoplay loop style="display:none;">
+  <audio id="audio" volu controls autoplay loop style="display:none;">
   <source src="audio.mp3" type="audio/mpeg"></audio>
 
   </div>
+
+
+  <script>
+
+  // Selecciona el elemento de audio
+  var audio = document.getElementById("audio");
+  // Establece el volumen al 30% (rango 0.0 a 1.0)
+  audio.volume = 0.3;
+  </script>
 
 
     <script>
