@@ -2,9 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Invitación Bautizo | Princesa</title>
 
   <!-- Fuentes -->
@@ -12,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+
+  <link rel="icon" type="image/png" href="eli1.png" />
 
   <!-- Animate.css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -38,6 +39,8 @@
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
+    img{max-width:100%; height:auto; display:block;}
+    html, body{touch-action: pan-y;}
 
     body{
       margin:0;
@@ -50,7 +53,6 @@
         linear-gradient(180deg, #fff 0%, var(--bg) 40%, #fff 100%);
       overflow-x:hidden;
 
-      /* snap por secciones */
       scroll-snap-type: y mandatory;
       overflow-y: auto;
     }
@@ -66,27 +68,29 @@
       filter: blur(.2px);
     }
 
-    /* SECCIONES 100vh */
+    /* ===== SECCIONES 100vh centradas ===== */
     .screen{
-     min-height: 100svh; /* mejor en móvil */
-  min-height: 100vh;  /* fallback */
+      min-height: 100svh;
+      min-height: 100vh;
       display:flex;
-      align-items:stretch;
-      justify-content:center;
-      padding: 0px 0 50px;
+      align-items:center;       /* ✅ centra vertical */
+      justify-content:center;   /* ✅ centra horizontal */
+      padding: 18px 0 88px;     /* ✅ deja espacio a la barra flotante */
       position:relative;
       z-index:1;
       scroll-snap-align: start;
       scroll-snap-stop: always;
     }
+
     .container{
       width:min(var(--max), 92vw);
       margin:0 auto;
       display:flex;
       flex-direction:column;
+      justify-content:center;  /* ✅ centra contenido interno */
       gap:14px;
-      padding-top: 24px;
     }
+
     .panel{
       border-radius: var(--radius);
       background: rgba(255,255,255,.80);
@@ -95,7 +99,6 @@
       padding: 18px;
       position:relative;
       overflow:hidden;
-      flex:1;
     }
     .panel::before{
       content:"";
@@ -111,9 +114,10 @@
       margin:0 0 10px;
       font-family:"Playfair Display", serif;
       letter-spacing:.2px;
+      text-align:center; /* ✅ centrado */
     }
     .panel h1{
-      font-size: clamp(34px, 7vw, 58px);
+      font-size: clamp(30px, 7vw, 58px);
       line-height:1.05;
     }
     .panel h1 span{
@@ -129,10 +133,10 @@
       color:var(--muted);
       line-height:1.85;
       font-size: 15.3px;
+      text-align:center; /* ✅ centrado */
     }
 
     .grid2{display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px; position:relative;}
-    @media (min-width:920px){ .grid2{grid-template-columns:1fr 1fr;} }
 
     .card{
       border-radius:24px;
@@ -141,35 +145,8 @@
       padding:14px;
       position:relative;
     }
-    .card h3{margin:0 0 6px; font-size:15.8px; letter-spacing:.2px; color:var(--ink);}
 
-    .actions{display:grid; grid-template-columns:1fr; gap:10px; margin-top:12px; position:relative;}
-    @media (min-width:700px){ .actions{grid-template-columns:repeat(3,1fr);} }
-
-    .btn{
-      border:0; cursor:pointer;
-      padding: 13px 14px;
-      border-radius: 18px;
-      font-weight:900;
-      letter-spacing:.2px;
-      transition: transform .15s ease;
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      user-select:none;
-      font-size: 14px;
-      min-height: 50px;
-    }
-    .btn:hover{transform: translateY(-1px)}
-    .btn:active{transform: translateY(1px)}
-    .btnPrimary{color:white; background: linear-gradient(90deg, var(--fucsia), var(--fucsia-2)); box-shadow: 0 16px 30px rgba(255,46,166,.22);}
-    .btnGold{color:#3a2b19; background: linear-gradient(90deg, var(--gold), var(--gold-2)); box-shadow: 0 16px 30px rgba(214,178,94,.22);}
-    .btnGhost{color: var(--ink); background: rgba(255,255,255,.76); border:1px solid rgba(214,178,94,.35);}
-    .note{margin-top:10px; font-size:12.8px; color:var(--muted); position:relative;}
-
-    /* FLOAT BAR (2 botones) */
+    /* ===== Barra flotante ===== */
     .floatBar{
       position:fixed;
       left:50%;
@@ -215,7 +192,7 @@
       box-shadow: 0 16px 30px rgba(255,46,166,.18);
     }
 
-    /* ====== CORTINAS (INTRO) ====== */
+    /* ===== Cortinas ===== */
     .curtain{
       position:fixed;
       inset:0;
@@ -232,12 +209,7 @@
       content:"";
       position:absolute; inset:0;
       background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,.08) 0px,
-          rgba(255,255,255,.02) 18px,
-          rgba(0,0,0,.06) 36px
-        ),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0px, rgba(255,255,255,.02) 18px, rgba(0,0,0,.06) 36px),
         radial-gradient(900px 420px at 50% -10%, rgba(242,217,138,.25), transparent 55%),
         linear-gradient(180deg, rgba(255,46,166,.95), rgba(255,98,194,.92) 40%, rgba(214,178,94,.90));
       filter: saturate(1.1);
@@ -285,7 +257,7 @@
     }
     .curtainTitle{
       font-family: 'Great Vibes', cursive;
-      font-size: clamp(50px, 8vw, 88px);
+      font-size: clamp(40px, 9vw, 88px); /* ✅ más amigable en móvil */
       line-height:1.05;
       margin:0;
       color: #fff;
@@ -318,30 +290,15 @@
     body.open .curtain{ pointer-events:none; }
     body.open .curtainCenter{ pointer-events:none; }
 
-    body.open .curtainSide.left{
-      animation: openLeft 1.05s cubic-bezier(.2,.9,.18,1) forwards;
-    }
-    body.open .curtainSide.right{
-      animation: openRight 1.05s cubic-bezier(.2,.9,.18,1) forwards;
-    }
-    body.open .curtainCenter{
-      animation: centerFade 0.55s ease forwards;
-    }
+    body.open .curtainSide.left{ animation: openLeft 1.05s cubic-bezier(.2,.9,.18,1) forwards; }
+    body.open .curtainSide.right{ animation: openRight 1.05s cubic-bezier(.2,.9,.18,1) forwards; }
+    body.open .curtainCenter{ animation: centerFade 0.55s ease forwards; }
 
     @keyframes openLeft{ to{ transform: translateX(-104%); } }
     @keyframes openRight{ to{ transform: translateX(104%); } }
     @keyframes centerFade{ to{ opacity:0; transform: scale(.98); } }
 
-    .curtain.hidden,
-    .curtainCenter.hidden{ display:none; }
-
-    @media (prefers-reduced-motion: reduce){
-      body{scroll-behavior:auto}
-      .shine{animation:none}
-      body.open .curtainSide.left,
-      body.open .curtainSide.right,
-      body.open .curtainCenter{animation:none}
-    }
+    .curtain.hidden, .curtainCenter.hidden{ display:none; }
 
     /* ===== Mostrar contenido SOLO después de la cortina ===== */
     .app.is-hidden{
@@ -380,67 +337,64 @@
       transform: translateY(0);
     }
 
-    /* ===== Layout tipo Canva: imagen / texto ===== */
+    /* ===== Layout tipo Canva (centrado y responsive) ===== */
     .split{
-      height: 100%;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-      align-items: center;
-    }
-
-    @media (min-width: 900px){
-      .split{ grid-template-columns: 1fr 1fr; gap: 28px; }
-      .split.is-reverse .split__media{ order: 2; }
-      .split.is-reverse .split__content{ order: 1; }
-    }
-
-    .split__media{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .mediaCard{
-      width: min(520px, 100%);
-      aspect-ratio: 4 / 5;
-      border-radius: 26px;
-      /* overflow: hidden; */
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(214,178,94,.35);
-      box-shadow: 0 18px 50px rgba(0,0,0,.10);
-      position: relative;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .mediaCard img{
       width:100%;
-      height:100%;
-      object-fit: cover;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      align-items:center;
+      justify-items:center; /* ✅ centra columnas */
+      text-align:center;    /* ✅ centra texto dentro */
+    }
+
+    /* En escritorio: dos columnas */
+    @media (min-width: 900px){
+      .split{
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+        text-align:left;
+      }
+      .split__content .panel{ text-align:left; }
+      .split__content .panel h1,
+      .split__content .panel p{ text-align:left; }
+    }
+
+    .split__media,
+    .split__content{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    /* ✅ Imagen principal (sin widths fijos) */
+    .heroImg{
+      width: min(280px, 80vw);
+      height:auto;
+      margin-inline:auto;
+    }
+
+    /* Foto dentro de card */
+    .photo{
+      width:100%;
+      border-radius:18px;
       display:block;
     }
 
-    .placeholder{
-      height:100%;
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-      text-align:center;
-      color: var(--muted);
-      font-weight: 900;
-      letter-spacing: .2px;
-      background:
-        radial-gradient(220px 170px at 20% 18%, rgba(255,46,166,.16), transparent 60%),
-        radial-gradient(260px 190px at 85% 30%, rgba(214,178,94,.18), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.62));
-    }
+    /* ✅ Ajustes finos móvil */
+    @media (max-width: 480px){
+      .container{ width: 94vw; }
+      .panel{ padding: 14px; border-radius: 22px; }
+      .card{ padding: 12px; border-radius: 18px; }
 
-    @media (max-width: 420px){
-      .mediaCard{ aspect-ratio: 1 / 1.05; }
+      .panel h1{ font-size: clamp(26px, 9vw, 42px); }
+      .panel p{ font-size: 14px; line-height: 1.7; }
+
+      .floatBar{ bottom: 10px; padding: 8px; }
+      .floatBtn{ height: 44px; font-size: 13px; border-radius: 16px; }
+
+      .heroImg{ width: min(240px, 78vw); }
     }
   </style>
 </head>
@@ -448,10 +402,10 @@
 <body class="is-opening">
   <div class="sparkles"></div>
 
-  <!-- CORTINAS (siempre arriba) -->
+  <!-- CORTINAS -->
   <div class="curtain" id="curtain" aria-hidden="true">
-    <div class="curtainSide"><div class="shine"></div></div>
-    <div class="curtainSide"><div class="shine"></div></div>
+    <div class="curtainSide left"><div class="shine"></div></div>
+    <div class="curtainSide right"><div class="shine"></div></div>
   </div>
 
   <!-- Centro (texto + botón) -->
@@ -462,9 +416,10 @@
     <button class="enterBtn" id="enterBtn">👑 Entrar</button>
   </div>
 
-  <!-- ✅ TODO el contenido inicia oculto -->
+  <!-- CONTENIDO -->
   <div id="app" class="app is-hidden">
-    <!-- FLOAT BAR (2 botones) -->
+
+    <!-- FLOAT BAR -->
     <div class="floatBar" aria-label="Navegación por secciones">
       <button class="floatBtn" id="btnUp" title="Subir">⬆ Subir</button>
       <button class="floatBtn primary" id="btnDown" title="Bajar">⬇ Bajar</button>
@@ -474,21 +429,13 @@
     <section class="screen bottom" id="s1">
       <div class="container">
         <div class="split">
-          <!-- IZQUIERDA: IMAGEN / LOGO / FOTO -->
           <div class="split__media left">
-           
-              <!-- ✅ PON AQUÍ TU IMAGEN -->
-              <img class="animate__shakeY" style="width:250px" src="bautizo.png" alt="Bautizo">
-              <!-- Si no quieres imagen, borra el <img> y usa el placeholder:
-              <div class="placeholder">Aquí va tu imagen/monograma</div>
-              -->
-        
+            <img class="heroImg animate__animated animate__shakeY" src="bautizo.png" alt="Bautizo">
           </div>
 
-          <!-- DERECHA: TEXTO -->
           <div class="split__content right">
             <div class="panel">
-              <h1 class="top" style="font-family:'Great Vibes', cursive; text-align: center;">
+              <h1 class="top" style="font-family:'Great Vibes', cursive;">
                 Elizabeth <span>Marcelo</span> Ocampo
               </h1>
 
@@ -496,11 +443,9 @@
 
               <div class="grid2">
                 <div class="card">
-                  <img style="width:100%; border-radius:18px; display:block;" src="eli1.png" alt="Foto de la princesa">
+                  <img class="photo" src="eli1.png" alt="Foto de la princesa">
                 </div>
-                
               </div>
-
 
               <div class="note" id="copyMsg" role="status" aria-live="polite"></div>
             </div>
@@ -510,25 +455,16 @@
     </section>
 
     <!-- SECCIÓN 2 -->
-
-        <section class="screen bottom" id="s2">
+    <section class="screen bottom" id="s2">
       <div class="container">
         <div class="split">
-          <!-- IZQUIERDA: IMAGEN / LOGO / FOTO -->
           <div class="split__media right">
-           
-              <!-- ✅ PON AQUÍ TU IMAGEN -->
-              <img class="animate__shakeY" style="width:500px" src="bautizo.png" alt="Bautizo">
-              <!-- Si no quieres imagen, borra el <img> y usa el placeholder:
-              <div class="placeholder">Aquí va tu imagen/monograma</div>
-              -->
-        
+            <img class="heroImg animate__animated animate__shakeY" src="bautizo.png" alt="Bautizo">
           </div>
 
-          <!-- DERECHA: TEXTO -->
           <div class="split__content right">
             <div class="panel">
-              <h1 class="top" style="font-family:'Great Vibes', cursive; text-align: center;">
+              <h1 class="top" style="font-family:'Great Vibes', cursive;">
                 Elizabeth <span>Marcelo</span> Ocampo
               </h1>
 
@@ -536,51 +472,23 @@
 
               <div class="grid2">
                 <div class="card">
-                  <img style="width:100%; border-radius:18px; display:block;" src="eli1.png" alt="Foto de la princesa">
+                  <img class="photo" src="eli1.png" alt="Foto de la princesa">
                 </div>
-                
               </div>
 
-
-              <div class="note" id="copyMsg" role="status" aria-live="polite"></div>
+              <div class="note" role="status" aria-live="polite"></div>
             </div>
           </div>
         </div>
       </div>
     </section>
-   
+
   </div>
 
   <script>
-    // ===========================
-    // CONFIG (EDITA AQUÍ)
-    // ===========================
-
-
     const $ = (id) => document.getElementById(id);
 
-    // Pintar datos
-    // $("girlName").textContent = config.nombre;
-    // $("fechaTxt").textContent = config.fechaTexto;
-    // $("horaTxt").textContent = config.horaTexto;
-
-
-
-    // Copiar dirección
-    async function copyAddress(){
-      try{
-        await navigator.clipboard.writeText(config.direccionCorta);
-        $("copyMsg").textContent = "✅ Dirección copiada.";
-        setTimeout(()=> $("copyMsg").textContent = "", 2500);
-      }catch(e){
-        $("copyMsg").textContent = "⚠️ No pude copiar. Copia manual: " + config.direccionCorta;
-      }
-    }
-
-
-    // ===========================
-    // Navegación por secciones (botones)
-    // ===========================
+    // Secciones para botones
     const sections = Array.from(document.querySelectorAll(".screen"));
 
     function getCurrentIndex(){
@@ -610,16 +518,22 @@
     }
     window.addEventListener("scroll", updateFloatButtons, { passive:true });
 
-    // ===========================
-    // TYPEWRITER: arranca SOLO después de abrir cortinas
-    // ===========================
+    // ScrollReveal (después de cortinas)
+    function startScrollReveal(){
+      if (!window.ScrollReveal) return;
+      ScrollReveal().reveal('.bottom', { delay: 150, origin: 'bottom', duration: 900, distance: '22px', reset: true });
+      ScrollReveal().reveal('.top',    { delay: 150, origin: 'top',    duration: 900, distance: '22px', reset: true });
+      ScrollReveal().reveal('.left',   { delay: 150, origin: 'left',   duration: 900, distance: '22px', reset: true });
+      ScrollReveal().reveal('.right',  { delay: 150, origin: 'right',  duration: 900, distance: '22px', reset: true });
+    }
+
+    // Typewriter (después de cortinas)
     function startTypewriterObserver(){
       const TYPE_SPEED_MS = 18;
       const TYPE_DELAY_MS = 120;
       const TYPE_ONCE = true;
 
       const typeEls = Array.from(document.querySelectorAll("[data-type]"));
-
       typeEls.forEach(el => {
         if (el.dataset.typeInit === "1") return;
         el.dataset.typeInit = "1";
@@ -645,9 +559,7 @@
         let i = 0;
         const caret = el.querySelector(".type-caret");
 
-        Array.from(el.childNodes).forEach(n => {
-          if (n !== caret) el.removeChild(n);
-        });
+        Array.from(el.childNodes).forEach(n => { if (n !== caret) el.removeChild(n); });
 
         function tick() {
           if (i <= full.length) {
@@ -664,12 +576,9 @@
             i++;
             setTimeout(tick, TYPE_SPEED_MS);
           } else {
-            setTimeout(() => {
-              if (caret) caret.style.display = "none";
-            }, 450);
+            setTimeout(() => { if (caret) caret.style.display = "none"; }, 450);
           }
         }
-
         setTimeout(tick, TYPE_DELAY_MS);
       }
 
@@ -677,31 +586,15 @@
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
-
           const localTypeEls = Array.from(entry.target.querySelectorAll("[data-type]"));
-          localTypeEls.forEach((el, idx) => {
-            setTimeout(() => typeInto(el), idx * 220);
-          });
+          localTypeEls.forEach((el, idx) => setTimeout(() => typeInto(el), idx * 220));
         });
       }, { threshold: 0.55 });
 
       screens.forEach(sec => sectionObserver.observe(sec));
     }
 
-    // ===========================
-    // ScrollReveal: arranca SOLO después de abrir cortinas
-    // ===========================
-    function startScrollReveal(){
-      if (!window.ScrollReveal) return;
-      ScrollReveal().reveal('.bottom', { delay: 150, origin: 'bottom', duration: 900, distance: '22px', reset: true });
-      ScrollReveal().reveal('.top',    { delay: 150, origin: 'top',    duration: 900, distance: '22px', reset: true });
-      ScrollReveal().reveal('.left',   { delay: 150, origin: 'left',   duration: 900, distance: '22px', reset: true });
-      ScrollReveal().reveal('.right',  { delay: 150, origin: 'right',  duration: 900, distance: '22px', reset: true });
-    }
-
-    // ===========================
-    // CORTINAS: ABRIR y después mostrar contenido
-    // ===========================
+    // Cortinas
     const curtain = $("curtain");
     const curtainCenter = $("curtainCenter");
     const enterBtn = $("enterBtn");
@@ -710,35 +603,26 @@
       document.body.classList.add("open");
       document.body.classList.remove("is-opening");
 
-      // cuando termine la animación, ocultar capas
       setTimeout(() => {
         curtain.classList.add("hidden");
         curtainCenter.classList.add("hidden");
 
-        // Mostrar app
         const app = document.getElementById("app");
         app.classList.remove("is-hidden");
         app.classList.add("is-ready");
 
-        // Asegurar inicio
         window.scrollTo({ top: 0, behavior: "instant" });
 
-        // Activar animaciones y observers
         startScrollReveal();
         startTypewriterObserver();
 
-        // Activar botones flotantes ya con todo cargado
         updateFloatButtons();
       }, 1150);
     }
 
-    // Click para entrar
     enterBtn.addEventListener("click", openCurtains);
-
-    // Auto-abrir (si quieres desactivarlo, borra esta línea)
     setTimeout(openCurtains, 5000);
 
-    // Teclas Enter/Escape
     window.addEventListener("keydown", (e) => {
       if (!curtain || curtain.classList.contains("hidden")) return;
       if (e.key === "Enter" || e.key === "Escape") openCurtains();
