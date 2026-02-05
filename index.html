@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>Invitación Bautizo | Princesa</title>
+  <title>Elizabeth Marcelo Mendez</title>
 
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,7 +77,7 @@
       display:flex;
       align-items:center;       /* ✅ centra vertical */
       justify-content:center;   /* ✅ centra horizontal */
-      padding: 0px 0 0px;     /* ✅ deja espacio a la barra flotante */
+      padding: 0px 0 20px;     /* ✅ deja espacio a la barra flotante */
       position:relative;
       z-index:1;
       scroll-snap-align: start;
@@ -352,16 +352,73 @@
     }
 
     /* En escritorio: dos columnas */
-    @media (min-width: 900px){
-      .split{
-        grid-template-columns: 1fr 1fr;
-        gap: 28px;
-        text-align:left;
-      }
-      .split__content .panel{ text-align:left; }
-      .split__content .panel h1,
-      .split__content .panel p{ text-align:left; }
-    }
+   /* =========================
+   ESCRITORIO (sin cambiar tu estilo)
+   - SOLO 2 columnas cuando existe .split__media
+   - El resto se queda centrado como en móvil
+   ========================= */
+@media (min-width: 900px){
+
+  /* Más aire en escritorio */
+  .container{
+    width: min(1040px, 88vw);
+    gap: 18px;
+  }
+
+  .panel{
+    padding: 26px;
+    border-radius: 30px;
+  }
+
+  .card{
+    padding: 16px;
+    border-radius: 24px;
+  }
+
+  /* Por defecto, en escritorio seguimos CENTRADOS (como estaba en móvil) */
+  .split{
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+  }
+  .split__content .panel{ text-align: center; }
+  .split__content .panel h1,
+  .split__content .panel p{ text-align: center; }
+
+  /* ✅ SOLO si la sección tiene imagen (.split__media) => 2 columnas */
+  .split:has(.split__media){
+    grid-template-columns: 1fr 1fr;
+    gap: 34px;
+    align-items: center;
+    text-align: left;
+  }
+
+  .split:has(.split__media) .split__content .panel{ text-align: left; }
+  .split:has(.split__media) .split__content .panel h1,
+  .split:has(.split__media) .split__content .panel p{ text-align: left; }
+
+  /* Imagen principal más grande en desktop */
+  .heroImg{
+    width: min(420px, 42vw);
+  }
+
+  /* Texto más elegante en desktop */
+  .panel h1{
+    font-size: clamp(44px, 4.2vw, 72px);
+  }
+
+  /* Cursiva un poquito más grande en desktop */
+  .cursiva{
+    font-size: 38px;
+  }
+}
+
+/* Extra para pantallas grandes */
+@media (min-width: 1200px){
+  .container{ width: min(1120px, 86vw); }
+  .heroImg{ width: 460px; }
+}
+
 
     .split__media,
     .split__content{
@@ -441,13 +498,71 @@
   color: #3a2b19;
 }
 
+  /* Estilo local para la sección Misa (no rompe tu diseño general) */
+  .misa-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    margin: 10px 0 18px;
+  }
+  .misa-pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    border-radius:999px;
+    background: rgba(255,255,255,.65);
+    border: 1px solid rgba(255,215,0,.35);
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-weight:600;
+  }
+  .misa-icon{
+    width:28px;height:28px;
+    display:grid;
+    place-items:center;
+    border-radius:999px;
+    background: linear-gradient(135deg, rgba(255,0,150,.18), rgba(255,215,0,.22));
+    border: 1px solid rgba(255,255,255,.6);
+  }
+  .misa-card{
+    position:relative;
+    overflow:hidden;
+  }
+  .misa-badge{
+    position:absolute;
+    top:12px;
+    left:12px;
+    padding:8px 12px;
+    border-radius:999px;
+    background: rgba(0,0,0,.55);
+    color:#fff;
+    font-weight:700;
+    letter-spacing:.3px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border: 1px solid rgba(255,255,255,.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index:2;
+  }
+  .inline-icon{
+    display:inline-block;
+    transform: translateY(1px);
+    margin-left: 4px;
+  }
+
+  
 
 
       .cursiva{ 
         font-family: 'Great Vibes', cursive;
-         font-size: 40px;
+         font-size: 30px;
          text-align:center;
-         color:#ff62c2
+         color:var(--fucsia-2)
      }
   </style>
 </head>
@@ -474,12 +589,6 @@
 
   <!-- CONTENIDO -->
   <div id="app" class="app is-hidden">
-
-    <!-- FLOAT BAR -->
-    <div class="floatBar" aria-label="Navegación por secciones">
-      <button class="floatBtn" id="btnUp" title="Subir">⬆ Subir</button>
-      <button class="floatBtn primary" id="btnDown" title="Bajar">⬇ Bajar</button>
-    </div>
 
 
 
@@ -521,8 +630,8 @@
 
           <div class="split__content">
             <div class="panel">
-              <h1 class="top" style="font-family:'Great Vibes', cursive;">
-               <span>Papás</span>
+              <h1 class="top" style="font-family:'Great Vibes', cursive; font-size:48px;">
+               Papás
               </h1>
               
               <h1 class="top" style="font-family:'Great Vibes', cursive;">
@@ -553,8 +662,8 @@
 
           <div class="split__content">
             <div class="panel">
-              <h1 class="top" style="font-family:'Great Vibes', cursive;">
-               <span>Padrinos</span>
+             <h1 class="top" style="font-family:'Great Vibes', cursive; font-size:48px;">
+               Padrinos
               </h1>
 
                <h1 class="top" style="font-family:'Great Vibes', cursive;">
@@ -575,6 +684,131 @@
         </div>
       </div>
     </section>
+<!-- MISA -->
+<section class="screen top" id="s4">
+  <div class="container">
+    <div class="split">
+
+      <div class="split__content">
+        <div class="panel">
+
+          <h1 class="top" style="font-family:'Great Vibes', cursive;">
+            <span>Misa</span>
+          </h1>
+
+          <div class="misa-meta">
+            <div class="misa-pill">
+              <span class="misa-icon" aria-hidden="true">⛪</span>
+              <span>Iglesia de Esquipulas</span>
+            </div>
+
+            <div class="misa-pill">
+              <span class="misa-icon" aria-hidden="true">📍</span>
+              <span>Cd. Altamirano, Gro.</span>
+            </div>
+
+        
+
+            <div class="misa-pill">
+              <span class="misa-icon" aria-hidden="true">🗓️</span>
+              <span>Viernes 20 de febrero del 2026</span>
+            </div>
+            <div class="misa-pill">
+              <span class="misa-icon" aria-hidden="true">🕓</span>
+              <span>4:00 pm</span>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="card misa-card">
+              <div class="misa-badge">
+                <span aria-hidden="true">✨</span> Ceremonia Religiosa
+              </div>
+
+              <!-- Si quieres una imagen: cambia misa.png por tu archivo -->
+              <img class="photo animate__bounce" src="eli3.jpeg" alt="Iglesia - Ceremonia religiosa">
+            </div>
+          </div>
+
+          <p class="cursiva" data-type>
+            En presencia de Dios y rodeados de amor, viviremos este momento inolvidable. Te esperamos. 
+   
+        
+          </p>
+
+          <div class="note" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RECEPCIÓN -->
+<section class="screen top" id="s5">
+  <div class="container">
+    <div class="split">
+
+      <div class="split__content">
+        <div class="panel">
+
+          <h1 class="top" style="font-family:'Great Vibes', cursive;">
+            <span>Recepción</span>
+          </h1>
+
+          <div class="misa-meta recepcion-meta">
+            <div class="misa-pill">
+              <span class="misa-icon" aria-hidden="true">🎉</span>
+              <span>Celebración</span>
+            </div>
+
+            <div class="misa-pill">
+              <span class="misa-icon" aria-hidden="true">🕔</span>
+              <span>5:00 pm</span>
+            </div>
+
+            <div class="misa-pill">
+              <span class="misa-icon" aria-hidden="true">📍</span>
+              <span>Salón Quinta Karen</span>
+            </div>
+
+            <div class="misa-pill">
+              <span class="misa-icon" aria-hidden="true">🏠</span>
+              <span>(Techado)</span>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="card misa-card">
+              <div class="misa-badge">
+                <span aria-hidden="true">✨</span> ¡Te esperamos!
+              </div>
+
+              <!-- Cambia recepcion.png por tu imagen -->
+              <img class="photo animate__bounce" src="eli4.jpeg" alt="Recepción - Salón Quinta Karen">
+            </div>
+          </div>
+
+          <p class="cursiva" data-type>
+            Después de la misa, acompáñanos a celebrar este día tan especial con alegría, música y mucha convivencia.
+          </p>
+
+          <div class="note" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</section>
+
+  <h1  class="cursiva animate__animated animate__heartBeat" style="font-size: 60px; color:#231626"><span>Te esperamos</span></h1>
+
+
+
+
+
 
 
 
@@ -659,10 +893,7 @@ musicBtn.addEventListener("click", toggleMusic);
       sections[idx].scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    const btnUp = $("btnUp");
-    const btnDown = $("btnDown");
-    btnUp.addEventListener("click", () => goToIndex(getCurrentIndex() - 1));
-    btnDown.addEventListener("click", () => goToIndex(getCurrentIndex() + 1));
+
 
     function updateFloatButtons(){
       const idx = getCurrentIndex();
